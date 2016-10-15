@@ -1,6 +1,8 @@
 var config = require('./../config/index'),
+    restcomm = require('../lib/restcomm'),
     authToken = require('../security/authToken'),
-    Users = require("../models/Users");
+    Users = require("../models/Users"),
+    Packages = require("../models/Packages");
 
 var usersApi = {
     getUsers: function (req, res) {
@@ -15,6 +17,31 @@ var usersApi = {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else res.status(200).json({response: {success: true, message: {user: data}}});
         })
+    },
+    registerDevice: function (req, res) {
+        if (!req.body.deviceId) {
+            res.status(401).json({response: {success: false, message: 'Invalid values'}});
+            return;
+        }
+
+        if (!req.user) {
+            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            return;
+        }
+
+
+        restcomm.createClient(req.body.deviceId, req.user, function(err, result){
+            if(err)
+                if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+            else{
+                Users.RegisterDevice(result.login, req.user, function(errS, data){
+                    if (errS) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+                    else {
+                        res.status(200).json({response: {success: true, message: {rate: data}}});
+                    }
+                });
+            }
+        });
     }
 };
 
@@ -80,6 +107,37 @@ var authApi = {
     }
 };
 
+var packagesApi = {
+    all: function (req, res) {
+        Packages.GetPackages(function (err, data) {
+            if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+            else res.status(200).json({response: {success: true, message: {rate: data}}});
+        });
+    },
+    purchase: function (req, res) {
+        if (!req.body.packageId) {
+            res.status(401).json({response: {success: false, message: 'Invalid values'}});
+            return;
+        }
+
+        if (req.body.packageId.length < 12) {
+            res.status(400).json({response: {success: false, message: 'PackageId is not valid'}});
+            return;
+        }
+
+        if (!req.user) {
+            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            return;
+        }
+
+        Users.PurchasePackage(req.body.packageId, req.user, function (err, data) {
+            if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+            else res.status(200).json({response: {success: true, message: {rate: data}}});
+        });
+
+    }
+};
+
 var viewsApi = {
     index: function (req, res) {
         res.status(200).render("index.html");
@@ -101,6 +159,7 @@ var errorApi = {
 };
 
 module.exports = {
+    packages: packagesApi,
     users: usersApi,
     error: errorApi,
     views: viewsApi,

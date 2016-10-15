@@ -7,8 +7,6 @@ module.exports = function (app) {
     app.get('/', api.views.index);
     app.get('/api', api.views.api);
 
-    
-
     //-------------------Auth API----------------------
     /**
      * @api {post} /api/auth/login SignUp&Login
@@ -28,6 +26,10 @@ module.exports = function (app) {
      *     }
      */
     app.post('/api/auth/login', api.auth.login);
+
+    //---------------Packages API------------------
+    app.get('/api/packages/all', auth.isAuth, api.packages.all);
+    app.post('/api/packages/purchase', auth.isAuth, api.packages.purchase);
 
 
     //----------------Error Handler-------------------

@@ -6,7 +6,7 @@ module.exports = {
         return jsonwebtoken.sign({
             _id: user._id,
             username: user.username,
-            passwrod: user.password
+            password: user.password
         }, secretKey);
     },
     verifyToken: function (token, callback) {

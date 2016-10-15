@@ -3,7 +3,9 @@ var mongoose = require("mongoose"),
 
 var UsersSchema = new mongoose.Schema({
     username: {type: String},
-    password: {type: String}
+    password: {type: String},
+    package_id: {type: mongoose.Schema.Types.ObjectId},
+    devices: [{typ: String}]
 });
 
 UsersSchema.pre('save', function (callback) {
@@ -42,6 +44,46 @@ Users.GetUser = function (username, callback) {
 
 Users.VerifyPassword = function (password, user) {
     return bcrypt.compareSync(password, user.password);
+};
+
+Users.PurchasePackage  = function (packageId, user, callback) {
+    callback = callback ||  function() {};
+
+    Users.findOne({_id: user._id}).exec(function(err, currentuser) {
+        if (err) return callback(err, 0);
+        else {
+            if (currentuser) {
+                User.findOneAndUpdate({_id: currentuser._id}, {package_id: packageId}, {new: true, upsert: true}).exec(function(err, result) {
+                    if(result)
+                        return callback(null, result);
+                    callback(err);
+                });
+            } else {
+                callback("User Not Exist", 0);
+            }
+        }
+    });
+};
+
+Users.RegisterDevice = function (device, user, callback) {
+    callback = callback || function(){};
+
+    
+    
+    Users.findOne({_id: user._id}).exec(function(err, currentuser) {
+        if (err) return callback(err, 0);
+        else {
+            if (currentuser) {
+                Users.findOneAndUpdate({_id: currentuser._id}, {$push: {"devices": device}}, {new: true, upsert: true}).exec(function(err, result) {
+                    if(result)
+                        return callback(null, result);
+                    callback(err);
+                });
+            } else {
+                callback("User Not Exist", 0);
+            }
+        }
+    });
 };
 
 module.exports = Users;

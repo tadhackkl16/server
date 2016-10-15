@@ -1,11 +1,8 @@
-var newrelic = require('newrelic'),
-    express = require('express'),
+var express = require('express'),
     mongoose = require('mongoose'),
-    config = require('./src/config/index'),
-    schedule = require('./src/schedule/index');
+    config = require('./src/config/index');
 
 var app = express();
-app.locals.newrelic = newrelic;
 
 //connect to mongodb
 var connect = function () {
@@ -22,7 +19,5 @@ mongoose.connection.on('disconnected', connect);
 require('./src/config/express')(app);
 require('./src/routes')(app);
 
-//schedule handlers
-//schedule.runSchedule();
 
 exports = module.exports = app;
