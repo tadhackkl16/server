@@ -6,6 +6,10 @@ var PackagesSchema = new mongoose.Schema({
     hours: {type: Number}
 });
 
+PackagesSchema.statics.objectId = function (objId) {
+    return mongoose.Types.ObjectId(objId);
+};
+
 var Packages = mongoose.model("Packages", PackagesSchema);
 
 Packages.GetPackages = function (callback) {
