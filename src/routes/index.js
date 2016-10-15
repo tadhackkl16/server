@@ -28,9 +28,62 @@ module.exports = function (app) {
     app.post('/api/auth/login', api.auth.login);
 
     //---------------Packages API------------------
+    /**
+     * @api {get} /api/packages/all Get All Packages
+     * @apiName GetPackages
+     * @apiGroup Package
+     *
+     * @apiHeader {String} x-access-token Users unique access-key.
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *      "response": {
+     *       "success": "true",
+     *       "message": {"packages": "Array of packages"}
+     *       }
+     *     }
+     */
     app.get('/api/packages/all', auth.isAuth, api.packages.all);
+
+    /**
+     * @api {get} /api/packages/purchase Purchase Package
+     * @apiName PurchasePackage
+     * @apiGroup Package
+     *
+     * @apiHeader {String} x-access-token Users unique access-key.
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *      "response": {
+     *       "success": "true",
+     *       "message": {"user": "User object"}
+     *       }
+     *     }
+     */
     app.post('/api/packages/purchase', auth.isAuth, api.packages.purchase);
 
+    //---------------User API-------------------
+    /**
+     * @api {post} /api/user/devices/register Register Device
+     * @apiName Register Device
+     * @apiGroup User
+     *
+     * @apiHeader {String} x-access-token Users unique access-key.
+     *
+     * @apiParam {String} deviceId Mandatory Device Id
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *      "response": {
+     *       "success": "true",
+     *       "message": {"user": "User Object"}
+     *       }
+     *     }
+     */
+    app.post('/api/user/devices/register', auth.isAuth, api.users.registerDevice);
 
     //----------------Error Handler-------------------
     app.use(api.error.error);

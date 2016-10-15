@@ -1,8 +1,10 @@
 {
-  "name": "Movies Rating",
+  "name": "Webrtc-Hack",
   "version": "0.1.1",
-  "description": "Movies Rating APIDoc",
-  "title": "Movies Rating APIDoc",
+  "description": "Webrtc-Hack APIDoc",
+  "title": "Webrtc-Hack APIDoc",
+  "url": "https://webrtc-hack.herokuapp.com/",
+  "sampleUrl": "https://webrtc-hack.herokuapp.com/",
   "code": "apidoc -i src/routes -o views/doc",
   "template": {
     "withCompare": true,

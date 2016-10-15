@@ -37,7 +37,7 @@ var usersApi = {
                 Users.RegisterDevice(result.login, req.user, function(errS, data){
                     if (errS) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
                     else {
-                        res.status(200).json({response: {success: true, message: {rate: data}}});
+                        res.status(200).json({response: {success: true, message: {user: data}}});
                     }
                 });
             }
@@ -111,7 +111,7 @@ var packagesApi = {
     all: function (req, res) {
         Packages.GetPackages(function (err, data) {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
-            else res.status(200).json({response: {success: true, message: {rate: data}}});
+            else res.status(200).json({response: {success: true, message: {packages: data}}});
         });
     },
     purchase: function (req, res) {
@@ -132,7 +132,7 @@ var packagesApi = {
 
         Users.PurchasePackage(req.body.packageId, req.user, function (err, data) {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
-            else res.status(200).json({response: {success: true, message: {rate: data}}});
+            else res.status(200).json({response: {success: true, message: {user: data}}});
         });
 
     }
