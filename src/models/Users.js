@@ -54,7 +54,7 @@ Users.PurchasePackage = function (packageId, user, callback) {
         if (err) return callback(err, 0);
         else {
             if (currentuser) {
-                User.findOneAndUpdate({_id: currentuser._id}, {package_id: packageId}, {
+                Users.findOneAndUpdate({_id: currentuser._id}, {package_id: packageId}, {
                     new: true,
                     upsert: true
                 }).exec(function (err, result) {
