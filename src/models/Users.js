@@ -5,7 +5,7 @@ var UsersSchema = new mongoose.Schema({
     username: {type: String},
     password: {type: String},
     deviceId: {type: String},
-    package_id: {type: mongoose.Schema.Types.ObjectId},
+    package_id: {type: String},
     devices: [String]
 });
 
