@@ -5,18 +5,29 @@ var config = require('./../config/index'),
     Packages = require("../models/Packages");
 
 var usersApi = {
-    getUsers: function (req, res) {
+    users: function (req, res) {
         Users.GetUsers(function (err, data) {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else res.status(200).json({response: {success: true, message: {users: data}}});
         })
     },
-    getUser: function (req, res) {
+    user: function (req, res) {
         var username = req.body.username;
         Users.GetUser(username, function (err, data) {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else res.status(200).json({response: {success: true, message: {user: data}}});
         })
+    },
+    currentUser: function (req, res){
+        if (!req.user) {
+            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            return;
+        }
+
+        Users.findOne({_id: req.user._id}).exec(function (err, data){
+            if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+            else res.status(200).json({response: {success: true, message: {user: data}}});
+        });
     },
     purchase: function (req, res) {
         if (!req.body.packageId) {
@@ -43,7 +54,35 @@ var usersApi = {
         });
 
     },
-    registerDevice: function (req, res) {
+    registerMaster: function(req, res) {
+        if (!req.body.deviceId) {
+            res.status(401).json({response: {success: false, message: 'Invalid values'}});
+            return;
+        }
+
+        if (!req.user) {
+            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            return;
+        }
+
+        Users.RegisterMaster(req.body.deviceId, req.user, function (errSR, data) {
+            if (errSR) res.status(500).json({
+                response: {
+                    success: false,
+                    message: 'Something blew up!'
+                }
+            });
+            else {
+                res.status(200).json({
+                    response: {
+                        success: true,
+                        message: {user: data}
+                    }
+                });
+            }
+        });
+    },
+    registerSlave: function(req, res){
         if (!req.body.deviceId) {
             res.status(401).json({response: {success: false, message: 'Invalid values'}});
             return;
@@ -70,7 +109,7 @@ var usersApi = {
                                         }
                                     });
                                 else {
-                                    Users.RegisterDevice(result.login, req.user, function (errSR, data) {
+                                    Users.RegisterSlave(result.login, req.user, function (errSR, data) {
                                         if (errSR) res.status(500).json({
                                             response: {
                                                 success: false,

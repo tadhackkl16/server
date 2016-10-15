@@ -153,6 +153,43 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/api/user/current",
+    "title": "Get Current User",
+    "name": "CurrentUser",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "x-access-token",
+            "description": "<p>Users unique access-key.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n \"response\": {\n  \"success\": \"true\",\n  \"message\": {\"user\": \"User object\"}\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/routes/index.js",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "https://webrtc-hack.herokuapp.com/api/user/current"
+      }
+    ]
+  },
+  {
+    "type": "post",
     "url": "/api/user/purchase",
     "title": "Purchase Package",
     "name": "PurchasePackage",
@@ -203,9 +240,9 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/api/user/register",
-    "title": "Register Device",
-    "name": "RegisterDevice",
+    "url": "/api/user/register/master",
+    "title": "Register Master Device",
+    "name": "RegisterMaserDevice",
     "group": "User",
     "header": {
       "fields": {
@@ -247,7 +284,57 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "https://webrtc-hack.herokuapp.com/api/user/register"
+        "url": "https://webrtc-hack.herokuapp.com/api/user/register/master"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "/api/user/register/slave",
+    "title": "Register Slave Device",
+    "name": "RegisterSlaveDevice",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "x-access-token",
+            "description": "<p>Users unique access-key.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "deviceId",
+            "description": "<p>Mandatory Device Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n \"response\": {\n  \"success\": \"true\",\n  \"message\": {\"user\": \"User Object\"}\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/routes/index.js",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "https://webrtc-hack.herokuapp.com/api/user/register/slave"
       }
     ]
   }

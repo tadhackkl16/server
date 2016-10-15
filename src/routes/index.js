@@ -70,26 +70,23 @@ module.exports = function (app) {
     app.post('/api/packages/add', auth.isAuth, api.packages.add);
 
     //---------------User API-------------------
-
     /**
-     * @api {post} /api/user/register Register Device
-     * @apiName RegisterDevice
+     * @api {post} /api/user/current Get Current User
+     * @apiName CurrentUser
      * @apiGroup User
      *
      * @apiHeader {String} x-access-token Users unique access-key.
-     *
-     * @apiParam {String} deviceId Mandatory Device Id
      *
      * @apiSuccessExample {json} Success-Response:
      *     HTTP/1.1 200 OK
      *     {
      *      "response": {
      *       "success": "true",
-     *       "message": {"user": "User Object"}
+     *       "message": {"user": "User object"}
      *       }
      *     }
      */
-    app.post('/api/user/register', auth.isAuth, api.users.registerDevice);
+    app.get('/api/user/current', auth.isAuth, api.users.currentUser);
 
     /**
      * @api {post} /api/user/purchase Purchase Package
@@ -110,6 +107,46 @@ module.exports = function (app) {
      *     }
      */
     app.post('/api/user/purchase', auth.isAuth, api.users.purchase);
+
+    /**
+     * @api {post} /api/user/register/slave Register Slave Device
+     * @apiName RegisterSlaveDevice
+     * @apiGroup User
+     *
+     * @apiHeader {String} x-access-token Users unique access-key.
+     *
+     * @apiParam {String} deviceId Mandatory Device Id
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *      "response": {
+     *       "success": "true",
+     *       "message": {"user": "User Object"}
+     *       }
+     *     }
+     */
+    app.post('/api/user/register/slave', auth.isAuth, api.users.registerSlave);
+
+    /**
+     * @api {post} /api/user/register/master Register Master Device
+     * @apiName RegisterMaserDevice
+     * @apiGroup User
+     *
+     * @apiHeader {String} x-access-token Users unique access-key.
+     *
+     * @apiParam {String} deviceId Mandatory Device Id
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *      "response": {
+     *       "success": "true",
+     *       "message": {"user": "User Object"}
+     *       }
+     *     }
+     */
+    app.post('/api/user/register/master', auth.isAuth, api.users.registerMaster);
 
     //----------------Error Handler-------------------
     app.use(api.error.error);

@@ -4,6 +4,7 @@ var mongoose = require("mongoose"),
 var UsersSchema = new mongoose.Schema({
     username: {type: String},
     password: {type: String},
+    deviceId: {type: String},
     package_id: {type: mongoose.Schema.Types.ObjectId},
     devices: [String]
 });
@@ -69,7 +70,21 @@ Users.PurchasePackage = function (packageId, user, callback) {
     });
 };
 
-Users.RegisterDevice = function (device, user, callback) {
+Users.RegisterMaster= function(deviceId, user, callback) {
+    callback = callback || function () {
+        };
+
+    Users.findOneAndUpdate({_id: user._id}, {deviceId: deviceId}, {
+        new: true,
+        upsert: true
+    }).exec(function (errS, result) {
+        if (err)
+            callback(errS);
+        else callback(null, result);
+    });
+};
+
+Users.RegisterSlave = function (device, user, callback) {
     callback = callback || function () {
         };
 
