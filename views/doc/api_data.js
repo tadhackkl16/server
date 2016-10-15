@@ -29,7 +29,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n \"response\": {\n  \"success\": \"true\",\n  \"message\": {\"token\": \"token\"}\n  }\n}",
+          "content": "HTTP/1.1 200 OK\n{\n \"response\": {\n  \"success\": \"true\",\n  \"message\": {\"token\": \"token\", \"user\": \"User object\"}\n  }\n}",
           "type": "json"
         }
       ]

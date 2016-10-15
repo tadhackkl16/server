@@ -122,7 +122,7 @@ var authApi = {
                         res.status(200).json({
                             response: {
                                 success: true,
-                                message: {token: token}
+                                message: {token: token, user: user}
                             }
                         });
                     }

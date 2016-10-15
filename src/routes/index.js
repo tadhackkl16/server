@@ -21,7 +21,7 @@ module.exports = function (app) {
      *     {
      *      "response": {
      *       "success": "true",
-     *       "message": {"token": "token"}
+     *       "message": {"token": "token", "user": "User object"}
      *       }
      *     }
      */
