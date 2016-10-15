@@ -51,24 +51,24 @@ var usersApi = {
             return;
         }
 
-        Users.findOne({_id: req.user._id}).exec(function (err, user) {
-            if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+        Users.findOne({_id: req.user._id}).exec(function (errS, user) {
+            if (errS) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else {
                 Packages.GetPackage(user.package_id, function (errP, _package) {
                     if (errP) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
                     else {
                         if (user.devices < _package.devices) {
-                            restcomm.createClient(req.body.deviceId, req.user, function (err, result) {
-                                if (err)
-                                    if (err) res.status(500).json({
+                            restcomm.createClient(req.body.deviceId, req.user, function (errC, result) {
+                                if (errC)
+                                    res.status(500).json({
                                         response: {
                                             success: false,
                                             message: 'Something blew up!'
                                         }
                                     });
                                     else {
-                                        Users.RegisterDevice(result.login, req.user, function (errS, data) {
-                                            if (errS) res.status(500).json({
+                                        Users.RegisterDevice(result.login, req.user, function (errSR, data) {
+                                            if (errSR) res.status(500).json({
                                                 response: {
                                                     success: false,
                                                     message: 'Something blew up!'

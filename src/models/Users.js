@@ -81,10 +81,10 @@ Users.RegisterDevice = function (device, user, callback) {
                 Users.findOneAndUpdate({_id: currentuser._id}, {$push: {"devices": device}}, {
                     new: true,
                     upsert: true
-                }).exec(function (err, result) {
-                    if (result)
-                        return callback(null, result);
-                    callback(err);
+                }).exec(function (errS, result) {
+                    if (err)
+                        callback(errS);
+                    else callback(null, result);
                 });
             } else {
                 callback("User Not Exist", 0);
