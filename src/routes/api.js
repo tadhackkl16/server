@@ -51,7 +51,7 @@ var usersApi = {
             return;
         }
 
-        User.findOne({_id: req.user._id}).exec(function (err, user) {
+        Users.findOne({_id: req.user._id}).exec(function (err, user) {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else {
                 Packages.GetPackage(user.package_id, function (errP, _package) {
