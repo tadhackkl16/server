@@ -5,7 +5,7 @@ var UsersSchema = new mongoose.Schema({
     username: {type: String},
     password: {type: String},
     package_id: {type: mongoose.Schema.Types.ObjectId},
-    devices: [{typ: String}]
+    devices: [String]
 });
 
 UsersSchema.pre('save', function (callback) {
@@ -78,7 +78,7 @@ Users.RegisterDevice = function (device, user, callback) {
         if (err) return callback(err, 0);
         else {
             if (currentuser) {
-                Users.findOneAndUpdate({_id: currentuser._id}, {$push: {"devices": device}}, {
+                Users.findOneAndUpdate({_id: currentuser._id}, {$pushAll: {devices: [device]}}, {
                     new: true,
                     upsert: true
                 }).exec(function (errS, result) {
