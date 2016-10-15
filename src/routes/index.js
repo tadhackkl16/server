@@ -69,24 +69,6 @@ module.exports = function (app) {
      */
     app.post('/api/packages/add', auth.isAuth, api.packages.add);
 
-    /**
-     * @api {get} /api/packages/purchase Purchase Package
-     * @apiName PurchasePackage
-     * @apiGroup Package
-     *
-     * @apiHeader {String} x-access-token Users unique access-key.
-     *
-     * @apiSuccessExample {json} Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *      "response": {
-     *       "success": "true",
-     *       "message": {"user": "User object"}
-     *       }
-     *     }
-     */
-    app.post('/api/packages/purchase', auth.isAuth, api.packages.purchase);
-
     //---------------User API-------------------
     /**
      * @api {post} /api/user/devices/register Register Device
@@ -107,6 +89,25 @@ module.exports = function (app) {
      *     }
      */
     app.post('/api/user/devices/register', auth.isAuth, api.users.registerDevice);
+
+
+    /**
+     * @api {post} /api/user/purchase Purchase Package
+     * @apiName PurchasePackage
+     * @apiGroup User
+     *
+     * @apiHeader {String} x-access-token Users unique access-key.
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *      "response": {
+     *       "success": "true",
+     *       "message": {"user": "User object"}
+     *       }
+     *     }
+     */
+    app.post('/api/user/purchase', auth.isAuth, api.users.purchase);
 
     //----------------Error Handler-------------------
     app.use(api.error.error);

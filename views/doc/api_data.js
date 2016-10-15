@@ -152,11 +152,11 @@ define({ "api": [
     ]
   },
   {
-    "type": "get",
-    "url": "/api/packages/purchase",
+    "type": "post",
+    "url": "/api/user/purchase",
     "title": "Purchase Package",
     "name": "PurchasePackage",
-    "group": "Package",
+    "group": "User",
     "header": {
       "fields": {
         "Header": [
@@ -181,10 +181,10 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "src/routes/index.js",
-    "groupTitle": "Package",
+    "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "https://webrtc-hack.herokuapp.com/api/packages/purchase"
+        "url": "https://webrtc-hack.herokuapp.com/api/user/purchase"
       }
     ]
   },

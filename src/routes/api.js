@@ -18,6 +18,28 @@ var usersApi = {
             else res.status(200).json({response: {success: true, message: {user: data}}});
         })
     },
+    purchase: function (req, res) {
+        if (!req.body.packageId) {
+            res.status(401).json({response: {success: false, message: 'Invalid values'}});
+            return;
+        }
+
+        if (req.body.packageId.length < 12) {
+            res.status(400).json({response: {success: false, message: 'PackageId is not valid'}});
+            return;
+        }
+
+        if (!req.user) {
+            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            return;
+        }
+
+        Users.PurchasePackage(req.body.packageId, req.user, function (err, data) {
+            if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+            else res.status(200).json({response: {success: true, message: {user: data}}});
+        });
+
+    },
     registerDevice: function (req, res) {
         if (!req.body.deviceId) {
             res.status(401).json({response: {success: false, message: 'Invalid values'}});
@@ -29,18 +51,46 @@ var usersApi = {
             return;
         }
 
-
-        restcomm.createClient(req.body.deviceId, req.user, function (err, result) {
-            if (err)
-                if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
-                else {
-                    Users.RegisterDevice(result.login, req.user, function (errS, data) {
-                        if (errS) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
-                        else {
-                            res.status(200).json({response: {success: true, message: {user: data}}});
+        User.findOne({_id: req.user._id}).exec(function (err, user) {
+            if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+            else {
+                Packages.GetPackage(user.package_id, function (errP, _package) {
+                    if (errP) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+                    else {
+                        if (user.devices < _package.devices) {
+                            restcomm.createClient(req.body.deviceId, req.user, function (err, result) {
+                                if (err)
+                                    if (err) res.status(500).json({
+                                        response: {
+                                            success: false,
+                                            message: 'Something blew up!'
+                                        }
+                                    });
+                                    else {
+                                        Users.RegisterDevice(result.login, req.user, function (errS, data) {
+                                            if (errS) res.status(500).json({
+                                                response: {
+                                                    success: false,
+                                                    message: 'Something blew up!'
+                                                }
+                                            });
+                                            else {
+                                                res.status(200).json({
+                                                    response: {
+                                                        success: true,
+                                                        message: {user: data}
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                            });
                         }
-                    });
-                }
+                        else
+                            res.status(401).json({response: {success: false, message: 'You reach the limit!'}});
+                    }
+                });
+            }
         });
     }
 };
@@ -136,28 +186,6 @@ var packagesApi = {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else res.status(200).json({response: {success: true, message: {package: data}}});
         })
-    },
-    purchase: function (req, res) {
-        if (!req.body.packageId) {
-            res.status(401).json({response: {success: false, message: 'Invalid values'}});
-            return;
-        }
-
-        if (req.body.packageId.length < 12) {
-            res.status(400).json({response: {success: false, message: 'PackageId is not valid'}});
-            return;
-        }
-
-        if (!req.user) {
-            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
-            return;
-        }
-
-        Users.PurchasePackage(req.body.packageId, req.user, function (err, data) {
-            if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
-            else res.status(200).json({response: {success: true, message: {user: data}}});
-        });
-
     }
 };
 
