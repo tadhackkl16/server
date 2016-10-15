@@ -205,7 +205,7 @@ define({ "api": [
     "type": "post",
     "url": "/api/user/register",
     "title": "Register Device",
-    "name": "Register_Device",
+    "name": "RegisterDevice",
     "group": "User",
     "header": {
       "fields": {

@@ -73,7 +73,7 @@ module.exports = function (app) {
 
     /**
      * @api {post} /api/user/register Register Device
-     * @apiName Register Device
+     * @apiName RegisterDevice
      * @apiGroup User
      *
      * @apiHeader {String} x-access-token Users unique access-key.
