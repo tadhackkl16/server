@@ -77,9 +77,9 @@ Users.RegisterMaster= function(deviceId, user, callback) {
     Users.findOneAndUpdate({_id: user._id}, {deviceId: deviceId}, {
         new: true,
         upsert: true
-    }).exec(function (errS, result) {
+    }).exec(function (err, result) {
         if (err)
-            callback(errS);
+            callback(err);
         else callback(null, result);
     });
 };
