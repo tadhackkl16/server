@@ -96,7 +96,7 @@ var usersApi = {
         Users.findOne({_id: req.user._id}).exec(function (errS, user) {
             if (errS) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else {
-                Packages.GetPackage(user.package_id, function (errP, _package) {
+                Packages.GetPackage(user.packageId, function (errP, _package) {
                     if (errP) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
                     else {
                         if (user.devices < _package.devices) {

@@ -5,7 +5,7 @@ var UsersSchema = new mongoose.Schema({
     username: {type: String},
     password: {type: String},
     deviceId: {type: String},
-    package_id: {type: String},
+    packageId: {type: String},
     devices: [String]
 });
 
@@ -55,7 +55,7 @@ Users.PurchasePackage = function (packageId, user, callback) {
         if (err) return callback(err, 0);
         else {
             if (currentuser) {
-                Users.findOneAndUpdate({_id: currentuser._id}, {package_id: packageId}, {
+                Users.findOneAndUpdate({_id: currentuser._id}, {packageId: packageId}, {
                     new: true,
                     upsert: true
                 }).exec(function (err, result) {
