@@ -1,0 +1,11 @@
+{
+  "name": "Movies Rating",
+  "version": "0.1.1",
+  "description": "Movies Rating APIDoc",
+  "title": "Movies Rating APIDoc",
+  "code": "apidoc -i src/routes -o views/doc",
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}
