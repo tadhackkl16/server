@@ -70,25 +70,6 @@ module.exports = function (app) {
     app.post('/api/packages/add', auth.isAuth, api.packages.add);
 
     //---------------User API-------------------
-    /**
-     * @api {post} /api/user/devices/register Register Device
-     * @apiName Register Device
-     * @apiGroup User
-     *
-     * @apiHeader {String} x-access-token Users unique access-key.
-     *
-     * @apiParam {String} deviceId Mandatory Device Id
-     *
-     * @apiSuccessExample {json} Success-Response:
-     *     HTTP/1.1 200 OK
-     *     {
-     *      "response": {
-     *       "success": "true",
-     *       "message": {"user": "User Object"}
-     *       }
-     *     }
-     */
-    app.post('/api/user/devices/register', auth.isAuth, api.users.registerDevice);
 
     /**
      * @api {post} /api/user/purchase Purchase Package
@@ -109,6 +90,26 @@ module.exports = function (app) {
      *     }
      */
     app.post('/api/user/purchase', auth.isAuth, api.users.purchase);
+
+    /**
+     * @api {post} /api/user/register Register Device
+     * @apiName Register Device
+     * @apiGroup User
+     *
+     * @apiHeader {String} x-access-token Users unique access-key.
+     *
+     * @apiParam {String} deviceId Mandatory Device Id
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *      "response": {
+     *       "success": "true",
+     *       "message": {"user": "User Object"}
+     *       }
+     *     }
+     */
+    app.post('/api/user/register', auth.isAuth, api.users.registerDevice);
 
     //----------------Error Handler-------------------
     app.use(api.error.error);

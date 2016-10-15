@@ -203,7 +203,7 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/api/user/devices/register",
+    "url": "/api/user/register",
     "title": "Register Device",
     "name": "Register_Device",
     "group": "User",
@@ -247,7 +247,7 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "https://webrtc-hack.herokuapp.com/api/user/devices/register"
+        "url": "https://webrtc-hack.herokuapp.com/api/user/register"
       }
     ]
   }
