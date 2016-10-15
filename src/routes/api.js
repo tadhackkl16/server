@@ -34,6 +34,9 @@ var usersApi = {
             return;
         }
 
+        
+        //pay with axiata payment
+        //send message with axiata paymanet
         Users.PurchasePackage(req.body.packageId, req.user, function (err, data) {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else res.status(200).json({response: {success: true, message: {user: data}}});
@@ -66,24 +69,24 @@ var usersApi = {
                                             message: 'Something blew up!'
                                         }
                                     });
-                                    else {
-                                        Users.RegisterDevice(result.login, req.user, function (errSR, data) {
-                                            if (errSR) res.status(500).json({
-                                                response: {
-                                                    success: false,
-                                                    message: 'Something blew up!'
-                                                }
-                                            });
-                                            else {
-                                                res.status(200).json({
-                                                    response: {
-                                                        success: true,
-                                                        message: {user: data}
-                                                    }
-                                                });
+                                else {
+                                    Users.RegisterDevice(result.login, req.user, function (errSR, data) {
+                                        if (errSR) res.status(500).json({
+                                            response: {
+                                                success: false,
+                                                message: 'Something blew up!'
                                             }
                                         });
-                                    }
+                                        else {
+                                            res.status(200).json({
+                                                response: {
+                                                    success: true,
+                                                    message: {user: data}
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
                             });
                         }
                         else
