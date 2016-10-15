@@ -170,6 +170,19 @@ define({ "api": [
         ]
       }
     },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "packageId",
+            "description": "<p>Mandatory Package Id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "examples": [
         {

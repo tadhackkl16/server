@@ -90,13 +90,14 @@ module.exports = function (app) {
      */
     app.post('/api/user/devices/register', auth.isAuth, api.users.registerDevice);
 
-
     /**
      * @api {post} /api/user/purchase Purchase Package
      * @apiName PurchasePackage
      * @apiGroup User
      *
      * @apiHeader {String} x-access-token Users unique access-key.
+     *
+     * @apiParam {String} packageId Mandatory Package Id
      *
      * @apiSuccessExample {json} Success-Response:
      *     HTTP/1.1 200 OK
