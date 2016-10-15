@@ -3,8 +3,8 @@ define({
   "version": "0.1.1",
   "description": "Webrtc-Hack APIDoc",
   "title": "Webrtc-Hack APIDoc",
-  "url": "https://webrtc-hack.herokuapp.com/",
-  "sampleUrl": "https://webrtc-hack.herokuapp.com/",
+  "url": "https://webrtc-hack.herokuapp.com",
+  "sampleUrl": "https://webrtc-hack.herokuapp.com",
   "code": "apidoc -i src/routes -o views/doc",
   "template": {
     "withCompare": true,
@@ -13,7 +13,7 @@ define({
   "apidoc": "0.2.0",
   "generator": {
     "name": "apidoc",
-    "time": "2016-10-15T06:45:40.780Z",
+    "time": "2016-10-15T06:47:40.560Z",
     "url": "http://apidocjs.com",
     "version": "0.16.1"
   }

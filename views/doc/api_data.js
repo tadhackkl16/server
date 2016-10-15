@@ -39,7 +39,7 @@ define({ "api": [
     "groupTitle": "Auth",
     "sampleRequest": [
       {
-        "url": "https://webrtc-hack.herokuapp.com//api/auth/login"
+        "url": "https://webrtc-hack.herokuapp.com/api/auth/login"
       }
     ]
   },
@@ -76,7 +76,7 @@ define({ "api": [
     "groupTitle": "Package",
     "sampleRequest": [
       {
-        "url": "https://webrtc-hack.herokuapp.com//api/packages/all"
+        "url": "https://webrtc-hack.herokuapp.com/api/packages/all"
       }
     ]
   },
@@ -113,7 +113,7 @@ define({ "api": [
     "groupTitle": "Package",
     "sampleRequest": [
       {
-        "url": "https://webrtc-hack.herokuapp.com//api/packages/purchase"
+        "url": "https://webrtc-hack.herokuapp.com/api/packages/purchase"
       }
     ]
   },
@@ -163,7 +163,7 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "https://webrtc-hack.herokuapp.com//api/user/devices/register"
+        "url": "https://webrtc-hack.herokuapp.com/api/user/devices/register"
       }
     ]
   }
