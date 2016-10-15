@@ -47,6 +47,29 @@ module.exports = function (app) {
     app.get('/api/packages/all', auth.isAuth, api.packages.all);
 
     /**
+     * @api {post} /api/packages/add Add Package
+     * @apiName AddPackage
+     * @apiGroup Package
+     *
+     * @apiHeader {String} x-access-token Users unique access-key.
+     *
+     * @apiParam {String} name Mandatory Name
+     * @apiParam {String} description Mandatory Description
+     * @apiParam {Number} hours Mandatory Hours
+     * @apiParam {String} devices Mandatory Number of Devices
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *      "response": {
+     *       "success": "true",
+     *       "message": {"package": "Package object"}
+     *       }
+     *     }
+     */
+    app.post('/api/packages/add', auth.isAuth, api.packages.add);
+
+    /**
      * @api {get} /api/packages/purchase Purchase Package
      * @apiName PurchasePackage
      * @apiGroup Package

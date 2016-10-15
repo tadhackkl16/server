@@ -30,17 +30,17 @@ var usersApi = {
         }
 
 
-        restcomm.createClient(req.body.deviceId, req.user, function(err, result){
-            if(err)
+        restcomm.createClient(req.body.deviceId, req.user, function (err, result) {
+            if (err)
                 if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
-            else{
-                Users.RegisterDevice(result.login, req.user, function(errS, data){
-                    if (errS) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
-                    else {
-                        res.status(200).json({response: {success: true, message: {user: data}}});
-                    }
-                });
-            }
+                else {
+                    Users.RegisterDevice(result.login, req.user, function (errS, data) {
+                        if (errS) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+                        else {
+                            res.status(200).json({response: {success: true, message: {user: data}}});
+                        }
+                    });
+                }
         });
     }
 };
@@ -113,6 +113,29 @@ var packagesApi = {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else res.status(200).json({response: {success: true, message: {packages: data}}});
         });
+    },
+    add: function (req, res) {
+        if (!req.body.name || !req.body.description || !req.body.devices || !req.body.hours) {
+            res.status(401).json({response: {success: false, message: 'Invalid values'}});
+            return;
+        }
+
+        if (!req.user) {
+            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            return;
+        }
+
+        var object = {
+            name: req.body.name,
+            description: req.body.description,
+            devices: req.body.devices,
+            hours: req.body.hours
+        };
+
+        Packages.CreatePackage(object, function (err, data) {
+            if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+            else res.status(200).json({response: {success: true, message: {package: data}}});
+        })
     },
     purchase: function (req, res) {
         if (!req.body.packageId) {

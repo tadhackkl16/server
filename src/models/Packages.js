@@ -12,6 +12,14 @@ Packages.GetPackages = function (callback) {
     Packages.find({}).lean().exec(callback);
 };
 
+Packages.CreatePackage = function (obj, callback) {
+    callback = callback || function () {
+        };
+
+    var _package = new Packages(obj);
+    _package.save(callback)
+};
+
 Packages.GetPackage = function (packageId, callback) {
     Packages.findOne({_id: packageId}).exec(callback);
 };
