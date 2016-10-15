@@ -20,7 +20,7 @@ var usersApi = {
     },
     currentUser: function (req, res){
         if (!req.user) {
-            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            res.status(500).json({response: {success: false, message: 'Not Authenticated'}});
             return;
         }
 
@@ -31,17 +31,17 @@ var usersApi = {
     },
     purchase: function (req, res) {
         if (!req.body.packageId) {
-            res.status(401).json({response: {success: false, message: 'Invalid values'}});
+            res.status(500).json({response: {success: false, message: 'Invalid values'}});
             return;
         }
 
         if (req.body.packageId.length < 12) {
-            res.status(400).json({response: {success: false, message: 'PackageId is not valid'}});
+            res.status(500).json({response: {success: false, message: 'PackageId is not valid'}});
             return;
         }
 
         if (!req.user) {
-            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            res.status(500).json({response: {success: false, message: 'Not Authenticated'}});
             return;
         }
 
@@ -56,12 +56,12 @@ var usersApi = {
     },
     registerMaster: function(req, res) {
         if (!req.body.deviceId) {
-            res.status(401).json({response: {success: false, message: 'Invalid values'}});
+            res.status(500).json({response: {success: false, message: 'Invalid values'}});
             return;
         }
 
         if (!req.user) {
-            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            res.status(500).json({response: {success: false, message: 'Not Authenticated'}});
             return;
         }
 
@@ -84,12 +84,12 @@ var usersApi = {
     },
     registerSlave: function(req, res){
         if (!req.body.deviceId) {
-            res.status(401).json({response: {success: false, message: 'Invalid values'}});
+            res.status(500).json({response: {success: false, message: 'Invalid values'}});
             return;
         }
 
         if (!req.user) {
-            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            res.status(500).json({response: {success: false, message: 'Not Authenticated'}});
             return;
         }
 
@@ -129,7 +129,7 @@ var usersApi = {
                             });
                         }
                         else
-                            res.status(401).json({response: {success: false, message: 'You reach the limit!'}});
+                            res.status(500).json({response: {success: false, message: 'You reach the limit!'}});
                     }
                 });
             }
@@ -141,7 +141,7 @@ var authApi = {
     login: function (req, res) {
 
         if (!req.body.username || !req.body.password) {
-            res.status(401).json({response: {success: false, message: 'Invalid values!'}});
+            res.status(500).json({response: {success: false, message: 'Invalid values!'}});
             return;
         }
         console.log(req.body);
@@ -154,7 +154,7 @@ var authApi = {
                 if (user) {
                     var validPass = Users.VerifyPassword(password, user);
                     if (!validPass)
-                        res.status(401).json({response: {success: false, message: 'Invalid password'}});
+                        res.status(500).json({response: {success: false, message: 'Invalid password'}});
                     else {
                         //token generator
                         var token = authToken.createToken(user);
@@ -175,7 +175,7 @@ var authApi = {
                         else {
                             //user exist just login
                             var validPass = Users.VerifyPassword(password, userObj);
-                            if (!validPass) res.status(400).json({
+                            if (!validPass) res.status(500).json({
                                 response: {
                                     success: false,
                                     message: 'Invalid password'
@@ -208,12 +208,12 @@ var packagesApi = {
     },
     add: function (req, res) {
         if (!req.body.name || !req.body.description || !req.body.devices || !req.body.hours) {
-            res.status(401).json({response: {success: false, message: 'Invalid values'}});
+            res.status(500).json({response: {success: false, message: 'Invalid values'}});
             return;
         }
 
         if (!req.user) {
-            res.status(401).json({response: {success: false, message: 'Not Authenticated'}});
+            res.status(500).json({response: {success: false, message: 'Not Authenticated'}});
             return;
         }
 
