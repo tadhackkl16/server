@@ -14,7 +14,7 @@ module.exports = function (app) {
      * @apiGroup Auth
      *
      * @apiParam {String} username Mandatory UserName
-     * @apiParam {String} passowrd Mandatory Password
+     * @apiParam {String} password Mandatory Password
      *
      * @apiSuccessExample {json} Success-Response:
      *     HTTP/1.1 200 OK

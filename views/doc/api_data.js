@@ -19,7 +19,7 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "passowrd",
+            "field": "password",
             "description": "<p>Mandatory Password</p>"
           }
         ]
