@@ -60,7 +60,7 @@ var authApi = {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else {
                 if (user) {
-                    var validPass = Users.VerifyPassword(pass, user);
+                    var validPass = Users.VerifyPassword(password, user);
                     if (!validPass)
                         res.status(401).json({response: {success: false, message: 'Invalid password'}});
                     else {
@@ -82,7 +82,7 @@ var authApi = {
                         if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
                         else {
                             //user exist just login
-                            var validPass = Users.VerifyPassword(pass, userObj);
+                            var validPass = Users.VerifyPassword(password, userObj);
                             if (!validPass) res.status(400).json({
                                 response: {
                                     success: false,
