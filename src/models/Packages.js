@@ -3,7 +3,8 @@ var PackagesSchema = new mongoose.Schema({
     name: {type: String},
     description: {type: String},
     devices: {type: Number},
-    hours: {type: Number}
+    hours: {type: Number},
+    price: {type: Number}
 });
 
 PackagesSchema.statics.objectId = function (objId) {

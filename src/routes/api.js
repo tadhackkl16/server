@@ -1,5 +1,6 @@
 var config = require('./../config/index'),
     restcomm = require('../lib/restcomm'),
+    axiata = require('../lib/axiata'),
     authToken = require('../security/authToken'),
     Users = require("../models/Users"),
     Packages = require("../models/Packages");
@@ -46,12 +47,20 @@ var usersApi = {
         }
 
 
-        //pay with axiata payment
-        //send message with axiata paymanet
+        
         Users.PurchasePackage(req.body.packageId, req.user, function (err, data) {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
-            else res.status(200).json({response: {success: true, message: {user: data}}});
-        });
+            else {
+                Packages.findOne({_id: req.body.packageId}).exec(function(errS, Mpackage){
+                    if (errS) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+                    else {
+                        axiata.charge(data.username, Mpackage.price);
+                        axiata.sms(data.username, "You have been charged: "+Mpackage.price);
+                    }
+                });
+                res.status(200).json({response: {success: true, message: {user: data}}})
+            };
+        })
 
     },
     registerMaster: function (req, res) {
