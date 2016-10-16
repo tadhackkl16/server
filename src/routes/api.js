@@ -77,7 +77,7 @@ var usersApi = {
                             }
                         });
                     else {
-                        Users.RegisterMaster(req.body.deviceId, req.user, function (errSR, data) {
+                        Users.RegisterMaster(result.login, req.user, function (errSR, data) {
                             if (errSR) res.status(500).json({
                                 response: {
                                     success: false,
