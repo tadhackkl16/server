@@ -11,7 +11,7 @@ function getClient(parent, callback) {
         if (!error && response.statusCode == 200) {
             var myClients = [];
             JSON.parse(body).forEach(function (user) {
-                var name = user.login.split('@');
+                var name = user.login.split('-');
                 if (name[0] == parent.username) {
                     myClients.push(user);
                 }
@@ -28,7 +28,7 @@ function createClient(deviceId, parent, callback) {
 
     request.post({
         url: clientsApi,
-        form: {Login: parent.username + '@' + deviceId, Password: parent.username + '@' + deviceId}
+        form: {Login: parent.username + '-' + deviceId, Password: parent.username + '-' + deviceId}
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             callback(null, JSON.parse(body));
