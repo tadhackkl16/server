@@ -28,7 +28,7 @@ function createClient(deviceId, parent, callback) {
 
     request.post({
         url: clientsApi,
-        form: {Login: parent.username + '-' + deviceId, Password: parent.username + '-' + deviceId}
+        form: {Login: parent.username + '-' + deviceId, Password: '12345'}
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             callback(null, JSON.parse(body));
