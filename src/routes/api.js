@@ -18,13 +18,13 @@ var usersApi = {
             else res.status(200).json({response: {success: true, message: {user: data}}});
         })
     },
-    currentUser: function (req, res){
+    currentUser: function (req, res) {
         if (!req.user) {
             res.status(500).json({response: {success: false, message: 'Not Authenticated'}});
             return;
         }
 
-        Users.findOne({_id: req.user._id}).exec(function (err, data){
+        Users.findOne({_id: req.user._id}).exec(function (err, data) {
             if (err) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
             else res.status(200).json({response: {success: true, message: {user: data}}});
         });
@@ -45,7 +45,7 @@ var usersApi = {
             return;
         }
 
-        
+
         //pay with axiata payment
         //send message with axiata paymanet
         Users.PurchasePackage(req.body.packageId, req.user, function (err, data) {
@@ -54,7 +54,7 @@ var usersApi = {
         });
 
     },
-    registerMaster: function(req, res) {
+    registerMaster: function (req, res) {
         if (!req.body.deviceId) {
             res.status(500).json({response: {success: false, message: 'Invalid values'}});
             return;
@@ -65,24 +65,47 @@ var usersApi = {
             return;
         }
 
-        Users.RegisterMaster(req.body.deviceId, req.user, function (errSR, data) {
-            if (errSR) res.status(500).json({
-                response: {
-                    success: false,
-                    message: 'Something blew up!'
-                }
-            });
-            else {
-                res.status(200).json({
-                    response: {
-                        success: true,
-                        message: {user: data}
+        Users.findOne({_id: req.user._id}).exec(function (errS, user) {
+            if (errS) res.status(500).json({response: {success: false, message: 'Something blew up!'}});
+            else if (user.deviceId == "") {
+                restcomm.createClient(req.body.deviceId, req.user, function (errC, result) {
+                    if (errC)
+                        res.status(500).json({
+                            response: {
+                                success: false,
+                                message: 'Something blew up!'
+                            }
+                        });
+                    else {
+                        Users.RegisterMaster(req.body.deviceId, req.user, function (errSR, data) {
+                            if (errSR) res.status(500).json({
+                                response: {
+                                    success: false,
+                                    message: 'Something blew up!'
+                                }
+                            });
+                            else {
+                                res.status(200).json({
+                                    response: {
+                                        success: true,
+                                        message: {user: data}
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
             }
-        });
+            else
+                res.status(500).json({
+                    response: {
+                        success: false,
+                        message: 'You already have master!'
+                    }
+                });
+        })
     },
-    registerSlave: function(req, res){
+    registerSlave: function (req, res) {
         if (!req.body.deviceId) {
             res.status(500).json({response: {success: false, message: 'Invalid values'}});
             return;

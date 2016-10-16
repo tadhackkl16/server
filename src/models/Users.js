@@ -70,7 +70,7 @@ Users.PurchasePackage = function (packageId, user, callback) {
     });
 };
 
-Users.RegisterMaster= function(deviceId, user, callback) {
+Users.RegisterMaster = function (deviceId, user, callback) {
     callback = callback || function () {
         };
 
